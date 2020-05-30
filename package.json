@@ -1,0 +1,19 @@
+{
+  "name": "clothecommerce",
+  "version": "1.0.0",
+  "description": "Ecommerce de ropa",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TgsGit1999/clothECommerce.git"
+  },
+  "author": "Tomas Sosa / Lucas Romero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TgsGit1999/clothECommerce/issues"
+  },
+  "homepage": "https://github.com/TgsGit1999/clothECommerce#readme"
+}

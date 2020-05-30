@@ -9,3 +9,4 @@ Librerias usadas en Node.js:
 2- body-parse
 3- dotenv
 4- cors
+5- nodemon

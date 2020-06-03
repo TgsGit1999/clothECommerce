@@ -1,4 +1,12 @@
+const express = require('express')
+const app = express()
 require('dotenv').config();
-const port = process.env.POST
+const {initDatabase} = require('./database')
 
-console.log(`${port} asdas`)
+
+const port = process.env.PORT
+
+
+app.listen({port}, () => {
+    initDatabase()
+})

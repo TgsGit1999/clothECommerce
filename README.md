@@ -10,3 +10,4 @@ Librerias usadas en Node.js:
 3- dotenv
 4- cors
 5- nodemon
+6- mongoose

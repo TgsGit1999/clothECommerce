@@ -1,48 +1,28 @@
-const mongoose = require("mongoose");
-const EsquemaUsuario = require("./../Esquemas/EsquemaUsuario");
-const Usuario = mongoose.model("Usuario", EsquemaUsuario, "Usuarios");
+const { db } = require("./../database");
 
-async function RegistrarUsuario({
-  email,
-  nombreCompleto,
-  password,
-  fechaNacimiento,
-  direccionCalle,
-  direccionNumero,
-  codigoPostal,
-  documento,
-  telefonoCelular,
-  ciudad,
-}) {
-  if ((await Usuario.findOne({ email: email, documento: documento })) != null) {
-    console.log("usuario ya existente");
-    return false;
-  } else {
-    new Usuario({
-      email,
-      nombreCompleto,
-      password,
-      fechaNacimiento,
-      direccionCalle,
-      direccionNumero,
-      codigoPostal,
-      documento,
-      telefonoCelular,
-      ciudad,
-      registro: Date.now(),
+async function RegistrarUsuario(Usuario) {
+  db.ref("Usuarios")
+    .push(Usuario)
+    .then(() => {
+      return Usuario;
     })
-      .save()
-      .then(() => {
-        return true;
-      })
-      .catch((error) => {
-        return error;
-      });
-  }
+    .catch((error) => {
+      console.log(`fijate... ${error}`);
+      return false;
+    });
 }
 
 async function Loggear({ email, password }) {
-  return await Usuario.findOne({ email: email, password: password });
+  const ref2 = db.ref("usuarios");
+  ref2.on("value", (snapshot) => {
+    ref2
+      .child(Object.key(snapshot))
+      .orderByChild("codigoPostal")
+      .equalTo(123)
+      .on("value", (snapshot) => {
+        console.log(snapshot.val());
+      });
+  });
 }
 
 const FuncionesDeUsuario = {

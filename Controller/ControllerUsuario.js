@@ -13,16 +13,16 @@ async function RegistrarUsuario(Usuario) {
 }
 
 async function Loggear({ email, password }) {
-  const ref2 = db.ref("usuarios");
-  ref2.on("value", (snapshot) => {
-    ref2
-      .child(Object.key(snapshot))
-      .orderByChild("codigoPostal")
-      .equalTo(123)
-      .on("value", (snapshot) => {
-        console.log(snapshot.val());
-      });
-  });
+  db.ref("Usuarios")
+    .orderByChild("email")
+    .equalTo(email)
+    .on("child_added", (data) => {
+      if (password === data.val().password) {
+        return data.val();
+      } else {
+        return false;
+      }
+    });
 }
 
 const FuncionesDeUsuario = {

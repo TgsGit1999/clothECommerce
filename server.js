@@ -16,6 +16,6 @@ app.listen({ port }, async () => {
   });
 
   app.post("/loguearse", async function loggearse(req, res) {
-    console.log(await Loggear(req.body.login));
+    res.send(await Loggear(req.body.login));
   });
 });

@@ -20,9 +20,9 @@ async function Loggear({ email, password }) {
     .once("value", (data) => {
       return data.val();
     });
-  console.log(Usuario.val());
-  console.log(password);
-  return Usuario.val().password == password ? Usuario.val() : false;
+  var key = Object.keys(Usuario.val())[0];
+  var contrasenia =  Usuario.val()[`${key}`].password;
+  return contrasenia === password ? Usuario.val()[`${key}`] : false;
 }
 
 const FuncionesDeUsuario = {

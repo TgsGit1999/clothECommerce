@@ -13,16 +13,16 @@ async function RegistrarUsuario(Usuario) {
 }
 
 async function Loggear({ email, password }) {
-  db.ref("Usuarios")
+  const Usuario = await db
+    .ref("Usuarios")
     .orderByChild("email")
     .equalTo(email)
-    .on("child_added", (data) => {
-      if (password === data.val().password) {
-        return data.val();
-      } else {
-        return false;
-      }
+    .once("value", (data) => {
+      return data.val();
     });
+  console.log(Usuario.val());
+  console.log(password);
+  return Usuario.val().password == password ? Usuario.val() : false;
 }
 
 const FuncionesDeUsuario = {

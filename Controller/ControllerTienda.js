@@ -1,7 +1,7 @@
 const { db } = require("./../database");
 
 async function RegistrarTienda(tienda) {
-  db.ref("Tiendas")
+  db.ref("Usuarios/Tiendas")
     .push(tienda)
     .then(() => {
       return tienda;

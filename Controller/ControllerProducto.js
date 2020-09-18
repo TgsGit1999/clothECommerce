@@ -1,3 +1,4 @@
+const { createConnection } = require("mongoose");
 const { db } = require("./../database");
 
 async function AltaProducto(producto) {
@@ -13,8 +14,13 @@ async function AltaProducto(producto) {
 
 async function TraerProductos(producto) {}
 
+const getProducto = async (body) => {
+  const response = db.ref("");
+};
+
 const funcionesDeProductos = {
   AltaProducto,
+  getProducto,
 };
 
 module.exports = funcionesDeProductos;

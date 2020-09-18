@@ -1,11 +1,14 @@
 require("dotenv").config();
-const admin = require("firebase-admin");
-const token = require("./ropaLandiToken.json");
+var admin = require("firebase");
 
-admin.initializeApp({
-  credential: admin.credential.cert(token),
+var configUrl = {
+  apiKey: "AIzaSyDMCeZ5rMEqXuoLN6yKXzMSl-tdcQxxrAc",
+  authDomain: "ropalandia-f8d02.firebaseapp.com",
   databaseURL: "https://ropalandia-f8d02.firebaseio.com/",
-});
+  storageBucket: "gs://ropalandia-f8d02.appspot.com",
+};
+
+admin.initializeApp(configUrl);
 
 const db = admin.database();
 

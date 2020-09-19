@@ -2,7 +2,11 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const cors = require("cors");
-const { RegistrarUsuario, Loggear } = require("./Controller/ControllerUsuario");
+const {
+  RegistrarUsuario,
+  Loggear,
+  buscarUsuarios,
+} = require("./Controller/ControllerUsuario");
 const { AltaProducto } = require("./Controller/ControllerProducto");
 const { RegistrarTienda } = require("./Controller/ControllerTienda");
 
@@ -39,5 +43,9 @@ app.listen({ port }, async () => {
 
   app.post("/verProducto", async (req, res) => {
     res.send(await getProducto(req.body));
+  });
+
+  app.post("/listarUsuarios", async (req, res) => {
+    res.send(await buscarUsuarios());
   });
 });

@@ -1,4 +1,10 @@
 const { db } = require("./../database");
+const express = require("express");
+const app = express();
+const jwt = require("jsonwebtoken");
+const config = require("../configs");
+
+app.set("key", config.key);
 
 async function RegistrarUsuario(Usuario) {
   db.ref("Usuarios/Clientes")
@@ -13,28 +19,66 @@ async function RegistrarUsuario(Usuario) {
 }
 
 async function Loggear({ email, password, tipo }) {
-  if (tipo === 1) {
-    const Usuario = await db
-      .ref("Usuarios/Tiendas")
-      .orderByChild("email")
-      .equalTo(email)
-      .once("value", (data) => {
-        return data.val();
-      });
-    var key = Object.keys(Usuario.val())[0];
-    var contrasenia = Usuario.val()[`${key}`].password;
-    return contrasenia === password ? Usuario.val()[`${key}`] : false;
-  } else {
-    const Usuario = await db
-      .ref("Usuarios/Clientes")
-      .orderByChild("email")
-      .equalTo(email)
-      .once("value", (data) => {
-        return data.val();
-      });
-    var key = Object.keys(Usuario.val())[0];
-    var contrasenia = Usuario.val()[`${key}`].password;
-    return contrasenia === password ? Usuario.val()[`${key}`] : false;
+  try {
+    if (tipo === 1) {
+      const Usuario = await db
+        .ref("Usuarios/Tiendas")
+        .orderByChild("email")
+        .equalTo(email)
+        .once("value", (data) => {
+          return data.val();
+        });
+      var key = Object.keys(Usuario.val())[0];
+      var contrasenia = Usuario.val()[`${key}`].password;
+      if (contrasenia === password) {
+        const payload = {
+          check: true,
+        };
+        const token = jwt.sign(payload, app.get("key"), {
+          expiresIn: 1440,
+        });
+        return {
+          mensaje: "Autorizacion Correcta",
+          token: token,
+          status: 200,
+        };
+      } else {
+        return {
+          mensaje: "Usuario o contraseña incorrecta",
+          status: 500,
+        };
+      }
+    } else {
+      const Usuario = await db
+        .ref("Usuarios/Clientes")
+        .orderByChild("email")
+        .equalTo(email)
+        .once("value", (data) => {
+          return data.val();
+        });
+      var key = Object.keys(Usuario.val())[0];
+      var contrasenia = Usuario.val()[`${key}`].password;
+      if (contrasenia === password) {
+        const payload = {
+          check: true,
+        };
+        const token = jwt.sign(payload, app.get("key"), {
+          expiresIn: 1440,
+        });
+        return {
+          mensaje: "Autorizacion Correcta",
+          token: token,
+          status: 200,
+        };
+      } else {
+        return {
+          mensaje: "Usuario o contraseña incorrecta",
+          status: 500,
+        };
+      }
+    }
+  } catch (e) {
+    throw new Error(e.message);
   }
 }
 

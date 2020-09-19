@@ -1,4 +1,3 @@
-const { createConnection } = require("mongoose");
 const { db } = require("./../database");
 
 async function AltaProducto(producto) {

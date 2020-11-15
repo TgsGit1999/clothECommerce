@@ -38,7 +38,9 @@ router.post('/registrarse',[
     direccionNumero,
     codigoPostal,
     documento,
-    telefonoCelular}  = req.body
+    telefonoCelular,
+    ciudad,
+    numeroPiso}  = req.body
  
     //checkeo si el usuario existe en la base
     let user = await User.findOne({email})
@@ -57,7 +59,9 @@ router.post('/registrarse',[
         direccionNumero,
         codigoPostal,
         documento,
-        telefonoCelular
+        telefonoCelular,
+        ciudad,
+        numeroPiso
       })
 
       //encripto password

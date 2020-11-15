@@ -39,6 +39,13 @@ const EsquemaUsuario = new mongoose.Schema({
         type: Number,
         required:[true,"el numero de celular es requerido"]
     },
+    ciudad:{
+        type: String,
+        required:[true,"la ciudad es requerida"]
+    },
+    numeroPiso:{
+        type: Number,
+    },
     registro:{
         type: Date,
         default:Date.now

@@ -83,13 +83,16 @@ async function Loggear({ email, password, tipo }) {
 }
 
 async function buscarUsuarios() {
-  const Usuarios = await db
+  let Usuarios = await db
     .ref("Usuarios")
-    .child("cliente")
+    .child("Clientes")
     .once("value", (data) => {
       return data.val();
     });
-  return Usuarios.val();
+  const keys = Object.keys(Usuarios.val());
+  return keys.map((key) => {
+    return Usuarios.val()[key];
+  });
 }
 
 const FuncionesDeUsuario = {

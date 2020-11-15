@@ -8,4 +8,4 @@ const EsquemaProducto = new mongoose.Schema({
     codigoPostal:{type: String,required:[false]},
     envio:{type: Boolean,required:[true,"el estado de envio es requerido"]},
     publicacion:{type:Date,required:[true,"la fecha de publicacion del articulo es requerida"]}
-})
+}) 

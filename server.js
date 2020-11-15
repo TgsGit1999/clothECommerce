@@ -1,51 +1,23 @@
-require("dotenv").config();
+
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const {
-  RegistrarUsuario,
-  Loggear,
-  buscarUsuarios,
-} = require("./Controller/ControllerUsuario");
-const { AltaProducto } = require("./Controller/ControllerProducto");
-const { RegistrarTienda } = require("./Controller/ControllerTienda");
+const connectDB = require('./database')
 
-const config = require("./configs");
 
-app.set("key", config.key);
+app.use(express.json({extended:false}))
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT || 8080;
 
-const port = process.env.PORT;
+connectDB()
 
-app.listen({ port }, async () => {
-  app.post("/registrarUsuario", async function (req, res) {
-    res.send(await RegistrarUsuario(req.body.data));
-  });
+app.get('/',(req,res) => {
+  res.send("server running")
+})
 
-  app.post("/registrarTienda", async function (req, res) {
-    res.send(await RegistrarTienda(req.body.data));
-  });
+app.use('/post',require('./routes/postRoute'))
 
-  app.post("/loguearse", async function loggearse(req, res) {
-    res.send(await Loggear(req.body.login));
-  });
+app.use('/user',require('./routes/userRoute'))
 
-  app.post("/altaProducto", async function productoAlta(req, res) {
-    res.send(await AltaProducto(req.body.producto));
-  });
-
-  app.post("/altaTienda", async function tiendaAlta(req, res) {
-    res.send(await AltaTienda(req.body.tienda));
-  });
-
-  app.post("/verProducto", async (req, res) => {
-    res.send(await getProducto(req.body));
-  });
-
-  app.post("/listarUsuarios", async (req, res) => {
-    res.send(await buscarUsuarios());
-  });
-});
+app.listen(PORT, () => {
+  console.log("Server activo")
+})

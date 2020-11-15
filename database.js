@@ -1,19 +1,12 @@
-require("dotenv").config();
-var admin = require("firebase");
+const mongoose = require('mongoose')
 
-var configUrl = {
-  apiKey: "AIzaSyDMCeZ5rMEqXuoLN6yKXzMSl-tdcQxxrAc",
-  authDomain: "ropalandia-f8d02.firebaseapp.com",
-  databaseURL: "https://ropalandia-f8d02.firebaseio.com/",
-  storageBucket: "gs://ropalandia-f8d02.appspot.com",
-};
+const url = `mongodb+srv://fantarta:atlas31199@ropalandiacluster.h9jud.mongodb.net/RopalandiaCluster?retryWrites=true&w=majority`
 
-admin.initializeApp(configUrl);
+const connectDB = () => {
+  mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology:true}).then(() => {
+    console.log("conectado a db")
+  })
+}
 
-const db = admin.database();
 
-const Database = {
-  db,
-};
-
-module.exports = Database;
+module.exports = connectDB
